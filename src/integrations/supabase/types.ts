@@ -14,7 +14,265 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      indicator_data: {
+        Row: {
+          annual_value: number | null
+          april: number | null
+          august: number | null
+          created_at: string | null
+          december: number | null
+          february: number | null
+          id: string
+          indicator_id: string | null
+          january: number | null
+          july: number | null
+          june: number | null
+          march: number | null
+          may: number | null
+          november: number | null
+          observations: string | null
+          october: number | null
+          operator_id: string | null
+          quarter_1: number | null
+          quarter_2: number | null
+          quarter_3: number | null
+          quarter_4: number | null
+          quarter_id: string | null
+          september: number | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          annual_value?: number | null
+          april?: number | null
+          august?: number | null
+          created_at?: string | null
+          december?: number | null
+          february?: number | null
+          id?: string
+          indicator_id?: string | null
+          january?: number | null
+          july?: number | null
+          june?: number | null
+          march?: number | null
+          may?: number | null
+          november?: number | null
+          observations?: string | null
+          october?: number | null
+          operator_id?: string | null
+          quarter_1?: number | null
+          quarter_2?: number | null
+          quarter_3?: number | null
+          quarter_4?: number | null
+          quarter_id?: string | null
+          september?: number | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          annual_value?: number | null
+          april?: number | null
+          august?: number | null
+          created_at?: string | null
+          december?: number | null
+          february?: number | null
+          id?: string
+          indicator_id?: string | null
+          january?: number | null
+          july?: number | null
+          june?: number | null
+          march?: number | null
+          may?: number | null
+          november?: number | null
+          observations?: string | null
+          october?: number | null
+          operator_id?: string | null
+          quarter_1?: number | null
+          quarter_2?: number | null
+          quarter_3?: number | null
+          quarter_4?: number | null
+          quarter_id?: string | null
+          september?: number | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "indicator_data_indicator_id_fkey"
+            columns: ["indicator_id"]
+            isOneToOne: false
+            referencedRelation: "indicators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "indicator_data_operator_id_fkey"
+            columns: ["operator_id"]
+            isOneToOne: false
+            referencedRelation: "operators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "indicator_data_quarter_id_fkey"
+            columns: ["quarter_id"]
+            isOneToOne: false
+            referencedRelation: "quarters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      indicator_sections: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          order_index: number
+          route_path: string
+          section_code: string
+          section_name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          order_index: number
+          route_path: string
+          section_code: string
+          section_name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          order_index?: number
+          route_path?: string
+          section_code?: string
+          section_name?: string
+        }
+        Relationships: []
+      }
+      indicators: {
+        Row: {
+          code: string
+          created_at: string | null
+          has_annual_data: boolean | null
+          has_monthly_data: boolean | null
+          has_quarterly_data: boolean | null
+          id: string
+          is_active: boolean | null
+          name: string
+          order_index: number
+          parent_indicator_id: string | null
+          section_id: string | null
+          unit: string
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          has_annual_data?: boolean | null
+          has_monthly_data?: boolean | null
+          has_quarterly_data?: boolean | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          order_index: number
+          parent_indicator_id?: string | null
+          section_id?: string | null
+          unit: string
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          has_annual_data?: boolean | null
+          has_monthly_data?: boolean | null
+          has_quarterly_data?: boolean | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          order_index?: number
+          parent_indicator_id?: string | null
+          section_id?: string | null
+          unit?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "indicators_parent_indicator_id_fkey"
+            columns: ["parent_indicator_id"]
+            isOneToOne: false
+            referencedRelation: "indicators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "indicators_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "indicator_sections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      operators: {
+        Row: {
+          address: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string | null
+          id: string
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      quarters: {
+        Row: {
+          created_at: string | null
+          end_month: number
+          id: string
+          is_active: boolean | null
+          quarter: number
+          start_month: number
+          year: number
+        }
+        Insert: {
+          created_at?: string | null
+          end_month: number
+          id?: string
+          is_active?: boolean | null
+          quarter: number
+          start_month: number
+          year: number
+        }
+        Update: {
+          created_at?: string | null
+          end_month?: number
+          id?: string
+          is_active?: boolean | null
+          quarter?: number
+          start_month?: number
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
