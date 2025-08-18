@@ -7,9 +7,10 @@ interface AnnualInputsProps {
   form: UseFormReturn<any>
   indicatorCode: string
   className?: string
+  selectedYear?: string
 }
 
-export function AnnualInputs({ form, indicatorCode, className }: AnnualInputsProps) {
+export function AnnualInputs({ form, indicatorCode, className, selectedYear }: AnnualInputsProps) {
   return (
     <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${className}`}>
       <FormField
@@ -18,7 +19,7 @@ export function AnnualInputs({ form, indicatorCode, className }: AnnualInputsPro
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-sm font-medium text-muted-foreground">
-              Valor Anual (2024)
+              Valor Anual ({selectedYear || '2024'})
             </FormLabel>
             <FormControl>
               <Input

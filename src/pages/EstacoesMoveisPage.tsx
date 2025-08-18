@@ -14,6 +14,7 @@ import { Loader2, Save } from "lucide-react"
 export default function EstacoesMoveisPage() {
   const [selectedOperator, setSelectedOperator] = useState<string>("")
   const [selectedQuarter, setSelectedQuarter] = useState<string>("")
+  const [selectedYear, setSelectedYear] = useState<string>("")
   
   const form = useForm()
 
@@ -31,20 +32,43 @@ export default function EstacoesMoveisPage() {
     }
   })
 
-  // Get quarters
-  const { data: quarters } = useQuery({
-    queryKey: ['quarters'],
+  // Get years
+  const { data: years } = useQuery({
+    queryKey: ['years'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('quarters')
-        .select('*')
+        .select('year')
         .eq('is_active', true)
         .order('year', { ascending: true })
-        .order('quarter', { ascending: true })
+      
+      if (error) throw error
+      
+      // Get unique years
+      const uniqueYears = [...new Set(data.map(q => q.year))]
+      return uniqueYears
+    }
+  })
+
+  // Get quarters based on selected year
+  const { data: quarters } = useQuery({
+    queryKey: ['quarters', selectedYear],
+    queryFn: async () => {
+      let query = supabase
+        .from('quarters')
+        .select('*')
+        .eq('is_active', true)
+      
+      if (selectedYear) {
+        query = query.eq('year', parseInt(selectedYear))
+      }
+      
+      const { data, error } = await query.order('quarter', { ascending: true })
       
       if (error) throw error
       return data
-    }
+    },
+    enabled: !!selectedYear
   })
 
   // Get indicators for Estações Móveis
@@ -99,7 +123,11 @@ export default function EstacoesMoveisPage() {
   ) || []
   
   const utilizadoresIndicators = indicators?.filter(ind => 
-    ind.code.startsWith('2.')
+    ind.code.startsWith('2.') && !ind.code.startsWith('MM.')
+  ) || []
+  
+  const mobileMoneyIndicators = indicators?.filter(ind => 
+    ind.code.startsWith('MM.')
   ) || []
 
   return (
@@ -116,6 +144,19 @@ export default function EstacoesMoveisPage() {
                 {operators?.map((operator) => (
                   <SelectItem key={operator.id} value={operator.id}>
                     {operator.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Ano" />
+              </SelectTrigger>
+              <SelectContent>
+                {years?.map((year) => (
+                  <SelectItem key={year} value={year.toString()}>
+                    {year}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -150,7 +191,7 @@ export default function EstacoesMoveisPage() {
             {/* Section 1: Número de Estações */}
             <IndicatorSection 
               title="1. Número total de estações móveis activos"
-              description="Dados trimestrais sobre o número de estações móveis por tipo de plano"
+              description="Dados mensais sobre o número de estações móveis por tipo de plano"
             >
               <div className="grid gap-6">
                 {numeroEstacoesIndicators.map((indicator) => (
@@ -158,6 +199,7 @@ export default function EstacoesMoveisPage() {
                     key={indicator.id}
                     indicator={indicator}
                     form={form}
+                    selectedYear={selectedYear}
                   />
                 ))}
               </div>
@@ -166,7 +208,7 @@ export default function EstacoesMoveisPage() {
             {/* Section 2: Utilizadores de Serviços */}
             <IndicatorSection 
               title="2. Utilizadores de Serviços"
-              description="Dados sobre utilizadores do serviço de voz por categoria"
+              description="Dados sobre utilizadores dos serviços móveis por categoria"
             >
               <div className="grid gap-6">
                 {utilizadoresIndicators.map((indicator) => (
@@ -174,6 +216,24 @@ export default function EstacoesMoveisPage() {
                     key={indicator.id}
                     indicator={indicator}
                     form={form}
+                    selectedYear={selectedYear}
+                  />
+                ))}
+              </div>
+            </IndicatorSection>
+
+            {/* Section 3: Mobile Money */}
+            <IndicatorSection 
+              title="3. Serviços de Mobile Money"
+              description="Dados trimestrais sobre serviços de mobile money por género"
+            >
+              <div className="grid gap-6">
+                {mobileMoneyIndicators.map((indicator) => (
+                  <IndicatorCard
+                    key={indicator.id}
+                    indicator={indicator}
+                    form={form}
+                    selectedYear={selectedYear}
                   />
                 ))}
               </div>

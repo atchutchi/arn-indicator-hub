@@ -21,6 +21,7 @@ export type Database = {
           august: number | null
           created_at: string | null
           december: number | null
+          desativacoes: number | null
           february: number | null
           id: string
           indicator_id: string | null
@@ -40,6 +41,7 @@ export type Database = {
           quarter_id: string | null
           september: number | null
           status: string | null
+          total: number | null
           updated_at: string | null
         }
         Insert: {
@@ -48,6 +50,7 @@ export type Database = {
           august?: number | null
           created_at?: string | null
           december?: number | null
+          desativacoes?: number | null
           february?: number | null
           id?: string
           indicator_id?: string | null
@@ -67,6 +70,7 @@ export type Database = {
           quarter_id?: string | null
           september?: number | null
           status?: string | null
+          total?: number | null
           updated_at?: string | null
         }
         Update: {
@@ -75,6 +79,7 @@ export type Database = {
           august?: number | null
           created_at?: string | null
           december?: number | null
+          desativacoes?: number | null
           february?: number | null
           id?: string
           indicator_id?: string | null
@@ -94,6 +99,7 @@ export type Database = {
           quarter_id?: string | null
           september?: number | null
           status?: string | null
+          total?: number | null
           updated_at?: string | null
         }
         Relationships: [

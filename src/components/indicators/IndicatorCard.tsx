@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { QuarterlyInputs } from "./QuarterlyInputs"
 import { MonthlyInputs } from "./MonthlyInputs"
 import { AnnualInputs } from "./AnnualInputs"
+import { MobileStationsInputs } from "./MobileStationsInputs"
 import { UseFormReturn } from "react-hook-form"
 
 interface IndicatorCardProps {
@@ -16,9 +17,10 @@ interface IndicatorCardProps {
     has_annual_data: boolean
   }
   form: UseFormReturn<any>
+  selectedYear?: string
 }
 
-export function IndicatorCard({ indicator, form }: IndicatorCardProps) {
+export function IndicatorCard({ indicator, form, selectedYear }: IndicatorCardProps) {
   const getInputType = () => {
     if (indicator.has_annual_data) return 'annual'
     if (indicator.has_monthly_data) return 'monthly'
@@ -27,6 +29,10 @@ export function IndicatorCard({ indicator, form }: IndicatorCardProps) {
   }
 
   const inputType = getInputType()
+  
+  // Check if this is a mobile stations indicator that needs special treatment
+  const isMobileStationsIndicator = indicator.code.match(/^1\.[1-4]\.?[a]?$/)
+  const needsSpecialMonthlyInputs = isMobileStationsIndicator && inputType === 'monthly'
 
   return (
     <Card className="bg-card border-border hover:bg-muted/30 transition-colors">
@@ -56,8 +62,15 @@ export function IndicatorCard({ indicator, form }: IndicatorCardProps) {
           />
         )}
         
-        {inputType === 'monthly' && (
+        {inputType === 'monthly' && !needsSpecialMonthlyInputs && (
           <MonthlyInputs 
+            form={form} 
+            indicatorCode={indicator.code} 
+          />
+        )}
+        
+        {needsSpecialMonthlyInputs && (
+          <MobileStationsInputs 
             form={form} 
             indicatorCode={indicator.code} 
           />
@@ -66,7 +79,8 @@ export function IndicatorCard({ indicator, form }: IndicatorCardProps) {
         {inputType === 'annual' && (
           <AnnualInputs 
             form={form} 
-            indicatorCode={indicator.code} 
+            indicatorCode={indicator.code}
+            selectedYear={selectedYear}
           />
         )}
       </CardContent>
