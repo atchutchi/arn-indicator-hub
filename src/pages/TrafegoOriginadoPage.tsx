@@ -8,7 +8,7 @@ import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { IndicatorSection } from "@/components/indicators/IndicatorSection"
-import { IndicatorCard } from "@/components/indicators/IndicatorCard"
+import { QuarterlyInputs } from "@/components/indicators/QuarterlyInputs"
 import { Loader2 } from "lucide-react"
 
 interface Operator {
@@ -323,49 +323,81 @@ export default function TrafegoOriginadoPage() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <IndicatorSection title="1. Número de Comunicações de Voz">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {comunicacoesVoz.map((indicator) => (
-                    <IndicatorCard
-                      key={indicator.id}
-                      indicator={indicator}
-                      form={form}
-                    />
+                    <div key={indicator.id} className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary">{indicator.code}</span>
+                        <span className="text-sm text-muted-foreground">|</span>
+                        <span className="text-sm font-medium">{indicator.name}</span>
+                        <span className="text-sm text-muted-foreground">({indicator.unit})</span>
+                      </div>
+                      <QuarterlyInputs
+                        form={form}
+                        indicatorCode={indicator.code}
+                        className="mt-2"
+                      />
+                    </div>
                   ))}
                 </div>
               </IndicatorSection>
 
               <IndicatorSection title="2. Volume de Tráfego de Voz (Minutos)">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {volumeTrafegoVoz.map((indicator) => (
-                    <IndicatorCard
-                      key={indicator.id}
-                      indicator={indicator}
-                      form={form}
-                    />
+                    <div key={indicator.id} className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary">{indicator.code}</span>
+                        <span className="text-sm text-muted-foreground">|</span>
+                        <span className="text-sm font-medium">{indicator.name}</span>
+                        <span className="text-sm text-muted-foreground">({indicator.unit})</span>
+                      </div>
+                      <QuarterlyInputs
+                        form={form}
+                        indicatorCode={indicator.code}
+                        className="mt-2"
+                      />
+                    </div>
                   ))}
                 </div>
               </IndicatorSection>
 
               <IndicatorSection title="3. Serviço de Mensagens SMS">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {servicoSMS.map((indicator) => (
-                    <IndicatorCard
-                      key={indicator.id}
-                      indicator={indicator}
-                      form={form}
-                    />
+                    <div key={indicator.id} className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary">{indicator.code}</span>
+                        <span className="text-sm text-muted-foreground">|</span>
+                        <span className="text-sm font-medium">{indicator.name}</span>
+                        <span className="text-sm text-muted-foreground">({indicator.unit})</span>
+                      </div>
+                      <QuarterlyInputs
+                        form={form}
+                        indicatorCode={indicator.code}
+                        className="mt-2"
+                      />
+                    </div>
                   ))}
                 </div>
               </IndicatorSection>
 
               <IndicatorSection title="4. Serviço de Mensagens MMS">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {servicoMMS.map((indicator) => (
-                    <IndicatorCard
-                      key={indicator.id}
-                      indicator={indicator}
-                      form={form}
-                    />
+                    <div key={indicator.id} className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary">{indicator.code}</span>
+                        <span className="text-sm text-muted-foreground">|</span>
+                        <span className="text-sm font-medium">{indicator.name}</span>
+                        <span className="text-sm text-muted-foreground">({indicator.unit})</span>
+                      </div>
+                      <QuarterlyInputs
+                        form={form}
+                        indicatorCode={indicator.code}
+                        className="mt-2"
+                      />
+                    </div>
                   ))}
                 </div>
               </IndicatorSection>
