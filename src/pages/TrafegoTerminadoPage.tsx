@@ -139,11 +139,14 @@ export default function TrafegoTerminadoPage() {
     )
   }
 
-  // Group indicators by main sections (will be created when database has data)
-  const comunicacoesVoz = indicators?.filter(ind => ind.code.startsWith('1.1')) || []
-  const volumeTrafegoVoz = indicators?.filter(ind => ind.code.startsWith('2.1')) || []
-  const servicoSMS = indicators?.filter(ind => ind.code.startsWith('3.1')) || []
-  const servicoMMS = indicators?.filter(ind => ind.code.startsWith('4.1')) || []
+  // Group indicators based on the provided structure
+  const chamadasTerminadas = indicators?.filter(ind => 
+    ind.code === '1' || ind.code === '1.1' || ind.code === '1.2' || ind.code === '1.3'
+  ) || []
+  
+  const minutosTerminados = indicators?.filter(ind => 
+    ind.code === '2' || ind.code === '2.1' || ind.code === '2.2' || ind.code === '2.3'
+  ) || []
 
   return (
     <AppLayout>
@@ -208,9 +211,9 @@ export default function TrafegoTerminadoPage() {
 
         <Form {...form}>
           <form className="space-y-6">
-            <IndicatorSection title="1. Número de Comunicações de Voz">
+            <IndicatorSection title="N.º de chamadas de voz TERMINADAS com resposta / ENTRADA (Incoming)">
               <div className="space-y-6">
-                {comunicacoesVoz.map((indicator) => (
+                {chamadasTerminadas.map((indicator) => (
                   <div key={indicator.id} className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-primary">{indicator.code}</span>
@@ -228,49 +231,9 @@ export default function TrafegoTerminadoPage() {
               </div>
             </IndicatorSection>
 
-            <IndicatorSection title="2. Volume de Tráfego de Voz (Minutos)">
+            <IndicatorSection title="Minutos de comunicação de voz TERMINADAS com resposta / ENTRADA (Incoming)">
               <div className="space-y-6">
-                {volumeTrafegoVoz.map((indicator) => (
-                  <div key={indicator.id} className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-primary">{indicator.code}</span>
-                      <span className="text-sm text-muted-foreground">|</span>
-                      <span className="text-sm font-medium">{indicator.name}</span>
-                      <span className="text-sm text-muted-foreground">({indicator.unit})</span>
-                    </div>
-                    <QuarterlyInputs
-                      form={form}
-                      indicatorCode={indicator.code}
-                      className="mt-2"
-                    />
-                  </div>
-                ))}
-              </div>
-            </IndicatorSection>
-
-            <IndicatorSection title="3. Serviço de Mensagens SMS">
-              <div className="space-y-6">
-                {servicoSMS.map((indicator) => (
-                  <div key={indicator.id} className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-primary">{indicator.code}</span>
-                      <span className="text-sm text-muted-foreground">|</span>
-                      <span className="text-sm font-medium">{indicator.name}</span>
-                      <span className="text-sm text-muted-foreground">({indicator.unit})</span>
-                    </div>
-                    <QuarterlyInputs
-                      form={form}
-                      indicatorCode={indicator.code}
-                      className="mt-2"
-                    />
-                  </div>
-                ))}
-              </div>
-            </IndicatorSection>
-
-            <IndicatorSection title="4. Serviço de Mensagens MMS">
-              <div className="space-y-6">
-                {servicoMMS.map((indicator) => (
+                {minutosTerminados.map((indicator) => (
                   <div key={indicator.id} className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-primary">{indicator.code}</span>
