@@ -9,6 +9,7 @@ import Operadores from "./pages/Operadores";
 import EstacoesMoveisPage from "./pages/EstacoesMoveisPage";
 import RoamingInternacionalPage from "./pages/RoamingInternacionalPage";
 import TrafegoOriginadoPage from "./pages/TrafegoOriginadoPage";
+import TrafegoTerminadoPage from "./pages/TrafegoTerminadoPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/estacoes-moveis" element={<EstacoesMoveisPage />} />
           <Route path="/roaming-internacional" element={<RoamingInternacionalPage />} />
           <Route path="/trafego-originado" element={<TrafegoOriginadoPage />} />
+          <Route path="/trafego-terminado" element={<TrafegoTerminadoPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
